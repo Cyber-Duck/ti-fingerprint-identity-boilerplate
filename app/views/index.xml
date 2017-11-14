@@ -1,0 +1,6 @@
+<Alloy>
+    <Window>
+        <Button onClick="authenticate">Ask for Finger print</Button>
+        <Widget platform="android" id="fingerprintDialog" src="ti.androidfingerprintalertdialog" />
+    </Window>
+</Alloy>

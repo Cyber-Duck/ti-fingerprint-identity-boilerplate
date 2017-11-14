@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app
+  xmlns:ti="http://ti.appcelerator.org">
+  <id>com.cyberduck.drawer</id>
+  <name>ti-touchfinger-boilerplate</name>
+  <version>1.0</version>
+  <publisher>not specified</publisher>
+  <url>not specified</url>
+  <description>not specified</description>
+  <copyright>not specified</copyright>
+  <icon>appicon.png</icon>
+  <fullscreen>false</fullscreen>
+  <navbar-hidden>false</navbar-hidden>
+  <analytics>false</analytics>
+  <guid>71e0f325-251e-40cd-9eee-58086825b726</guid>
+  <property name="ti.ui.defaultunit" type="string">dp</property>
+  <property name="touchid.team_id" type="string">EFXYW8EWH8</property>
+  <ios>
+    <plist>
+      <dict>
+        <key>UISupportedInterfaceOrientations~iphone</key>
+        <array>
+          <string>UIInterfaceOrientationPortrait</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+          <string>UIInterfaceOrientationPortrait</string>
+          <string>UIInterfaceOrientationPortraitUpsideDown</string>
+          <string>UIInterfaceOrientationLandscapeLeft</string>
+          <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        <key>UIRequiresPersistentWiFi</key>
+        <false/>
+        <key>UIPrerenderedIcon</key>
+        <false/>
+        <key>UIStatusBarHidden</key>
+        <false/>
+        <key>UIStatusBarStyle</key>
+        <string>UIStatusBarStyleDefault</string>
+      </dict>
+    </plist>
+  </ios>
+  <android
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <manifest android:versionCode="1" android:versionName="1.0">
+      <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="25"/>
+      <application android:screenOrientation="portrait" android:theme="@style/boilerplate"/>
+      <!-- Fingerprint Permissions -->
+      <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    </manifest>
+  </android>
+  <mobileweb>
+    <precache/>
+    <splash>
+      <enabled>true</enabled>
+      <inline-css-images>true</inline-css-images>
+    </splash>
+    <theme>default</theme>
+  </mobileweb>
+  <modules>
+    <module platform="android" version="1.0.0">ti.identity</module>
+    <module platform="android" version="3.1.0">bencoding.securely</module>
+    <module platform="iphone" version="1.0.1">ti.identity</module>
+  </modules>
+  <deployment-targets>
+    <target device="android">true</target>
+    <target device="ipad">false</target>
+    <target device="iphone">true</target>
+    <target device="mobileweb">false</target>
+    <target device="windows">false</target>
+  </deployment-targets>
+  <sdk-version>6.3.0.GA</sdk-version>
+  <plugins>
+    <plugin version="1.0">ti.alloy</plugin>
+  </plugins>
+  <property name="appc-app-id" type="string">5a0b17f06e9f6a09a3595f93</property>
+</ti:app>

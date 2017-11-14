@@ -1,0 +1,140 @@
+<p><a href="https://github.com/benbahrenburg/Securely">&lt;&lt; back to the Securely main page</a></p>
+<p>BenCoding.Securely.StringCrypto</p>
+<p>The Securely StringCrypto module is used to encrypt and decrypt strings using a variety of methods.<br />
+</p>
+<h2>Getting Started</h2>
+
+<ul>
+<li>First you need to download and install the module as discussed <a href="https://github.com/benbahrenburg/Securely">here.</a></li>
+<li>You can now use the module via the commonJS require method, example shown below.</li>
+</ul>
+<pre><code>
+var securely = require('bencoding.securely');
+</code></pre>
+
+<h2>Requiring Securely into your project</h2>
+
+<p>Requiring the module into your project</p>
+<pre><code>
+//Require the securely module into your project
+var securely = require('bencoding.securely');
+
+</code></pre>
+
+<h2>Creating the StringCrypto Object</h2>
+
+<p>The following demonstrates how to create a new instance of the Securely StringCrypto component.</p>
+<pre><code>
+var stringCrypto = securely.createStringCrypto();
+</code></pre>
+
+<h2>Methods</h2>
+
+<h3>AESEncrypt</h3>
+
+<p>As the name implies this method uses the AES encryption algorithm to encrypt a string. This method returns an AES encrypted string of the plain text provided.  The password is used as the AES key during the encryption process.</p>
+<p><b>Arguments</b></p>
+<p>The AESEncrypt method takes the following arguments ( order is important ).</p>
+<p><b>1. Password</b> - (required) The password used as the encryption seed.</p>
+<p><b>2. text</b> - (required) The text you wish to encrypt.</p>
+<p><b>3. useHex</b> - (optional default of true) A boolean flag if you want the value to be converted to hex on the return. If false, you must provide the same parameter into the decrypt method.</p>
+<p><b>Return value</b>
+string ( encrypted )</p>
+<p><b>Example</b>
+<pre><code></p>
+<p>var plainTextString = "this is a clear text example string";
+var usingGUID = securely.generateDerivedKey(Ti.Platform.createUUID());<br />
+Ti.API.info("Derived key using GUID = " + usingGUID);
+var aesEncryptedString = stringCrypto.AESEncrypt(usingGUID,plainTextString);
+Ti.API.info("aesEncryptedString =" + aesEncryptedString);</p>
+<p></code></pre></p>
+<hr />
+<h3>AESDecrypt</h3>
+
+<p>As the name implies this method uses the AES encryption algorithm to decrypt an AES encrypted string. This method decrypts the provided encrypted text using the password provided. After decryption is completed, a plain text string is returned.</p>
+<p><b>Arguments</b></p>
+<p>The AESDecrypt method takes the following arguments ( order is important ).</p>
+<p><b>1. Password</b> - (required) The password used as the encryption seed.</p>
+<p><b>2. text</b> - (required) The encrypted text you wish to decrypt.</p>
+<p><b>3. useHex</b> - (optional default of true) A boolean flag if the values should be converted to hex during the decryption process.  Is configuration must make that used in the AESEncrypt method call used to encrypt the string.</p>
+<p><b>Return value</b>
+string ( plain text )</p>
+<p><b>Example</b>
+<pre><code></p>
+<p>Ti.API.info("Demonstrate using AES Decryption");
+var aesDecryptedString = stringCrypto.AESDecrypt(usingGUID,aesEncryptedString);
+Ti.API.info('aesDecryptedString=' + aesDecryptedString);</p>
+<p></code></pre></p>
+<hr />
+<p><h3>DESEncrypt</h3></p>
+<p>As the name implies this method uses the DES encryption algorithm to encrypt a string. This method returns an DES encrypted string of the plain text provided.  The password is used as the DES key during the encryption process.</p>
+<p><b>Arguments</b></p>
+<p>The DESEncrypt method takes the following arguments ( order is important ).</p>
+<p><b>1. Password</b> - (required) The password used as the encryption seed.</p>
+<p><b>2. text</b> - (required) The text you wish to encrypt.</p>
+<p><b>3. useHex</b> - (optional default of true) A boolean flag if you want the value to be converted to hex on the return. If false, you must provide the same parameter into the decrypt method.</p>
+<p><b>Return value</b>
+string ( encrypted )</p>
+<p><b>Example</b>
+<pre><code></p>
+<p>var plainTextString = "this is a clear text example string";
+var usingGUID = securely.generateDerivedKey(Ti.Platform.createUUID());<br />
+</p>
+<p>Ti.API.info("Demonstrate using DES Encryption");
+var desEncryptedString = stringCrypto.DESEncrypt(usingGUID,plainTextString);
+Ti.API.info("desEncryptedString =" + desEncryptedString);</p>
+<p></code></pre></p>
+<hr />
+<h3>DESDecrypt</h3>
+
+<p>As the name implies this method uses the DES encryption algorithm to decrypt an DES encrypted string. This method decrypts the provided encrypted text using the password provided. After decryption is completed, a plain text string is returned.</p>
+<p><b>Arguments</b></p>
+<p>The DESDecrypt method takes the following arguments ( order is important ).</p>
+<p><b>1. Password</b> - (required) The password used as the encryption seed.</p>
+<p><b>2. text</b> - (required) The encrypted text you wish to decrypt.</p>
+<p><b>3. useHex</b> - (optional default of true) A boolean flag if the values should be converted to hex during the decryption process.  Is configuration must make that used in the DESEncrypt method call used to encrypt the string.</p>
+<p><b>Return value</b>
+string ( plain text )</p>
+<p><b>Example</b>
+<pre><code></p>
+<p>Ti.API.info("Demonstrate using DES Decryption");
+var desDecryptedString = stringCrypto.DESDecrypt(usingGUID,desEncryptedString);
+Ti.API.info('desDecryptedString=' + desDecryptedString);</p>
+<p></code></pre></p>
+<hr />
+<h3>sha256</h3>
+
+<p>This method takes a string value and returns a sha256 hash of the results.</p>
+<p><b>Arguments</b></p>
+<p>The sha256 method takes the following argument.</p>
+<p><b>text</b> - (required) The text you wish to hash.</p>
+<p><b>Return value</b>
+string</p>
+<hr />
+<h3>sha512</h3>
+
+<p>This method takes a string value and returns a sha512 hash of the results.</p>
+<p><b>Arguments</b></p>
+<p>The sha512 method takes the following argument.</p>
+<p><b>text</b> - (required) The text you wish to hash.</p>
+<p><b>Return value</b>
+string</p>
+<hr />
+<h3>toHex</h3>
+
+<p>This method takes a string value and returns a hex value of the results.</p>
+<p><b>Arguments</b></p>
+<p>The toHex method takes the following argument.</p>
+<p><b>text</b> - (required) The text you wish to hash.</p>
+<p><b>Return value</b>
+string</p>
+<hr />
+<h3>fromHex</h3>
+
+<p>This method takes a hex value and returns a string</p>
+<p><b>Arguments</b></p>
+<p>The fromHex method takes the following argument.</p>
+<p><b>text</b> - (required) The hash code you wish converted to a string</p>
+<p><b>Return value</b>
+string</p>
+<hr />

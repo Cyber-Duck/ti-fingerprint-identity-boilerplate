@@ -1,0 +1,51 @@
+<p><a href="https://github.com/benbahrenburg/Securely">&lt;&lt; back to the Securely main page</a></p>
+<p>BenCoding.Securely</p>
+<p>The key generation methods are available at the root of the securely module.</p>
+<h2>Getting Started</h2>
+
+<ul>
+<li>First you need to download and install the module as discussed <a href="https://github.com/benbahrenburg/Securely">here.</a></li>
+<li>You can now use the module via the commonJS require method, example shown below.</li>
+</ul>
+<pre><code>
+var securely = require('bencoding.securely');
+</code></pre>
+
+<h2>Requiring Securely into your project</h2>
+
+<p>Requiring the module into your project</p>
+<pre><code>
+//Require the securely module into your project
+var securely = require('bencoding.securely');
+
+</code></pre>
+
+<h2>Methods</h2>
+
+<h3>generateDerivedKey</h3>
+
+<p>The generateDerivedKey method takes an input string and uses this string as a seed to generate a derived key.  This key then can be used as a password or key for later encryption method.</p>
+<p><b>Arguments</b></p>
+<p>The generateDerivedKey method takes the following arguments ( order is important ).</p>
+<p><b>1. String</b> - (required) String to be used as the derived key's seed value.</p>
+<p><b>Return value</b>
+String</p>
+<p><b>Example</b>
+<pre><code></p>
+<p>var usingGUID = securely.generateDerivedKey(Ti.Platform.createUUID());<br />
+Ti.API.info("Derived key using GUID = " + usingGUID);</p>
+<p></code></pre></p>
+<hr />
+<h3>generateRandomKey</h3>
+
+<p>The generateRandomKey method generates a randomly generated key.  This key then can be used as a password or key for later encryption method.</p>
+<p><b>Arguments</b>
+None</p>
+<p><b>Return value</b>
+String</p>
+<p><b>Example</b>
+<pre><code></p>
+<p>var randomKey = securely.generateRandomKey();
+Ti.API.info("Random Key = " + randomKey);</p>
+<p></code></pre></p>
+<hr />

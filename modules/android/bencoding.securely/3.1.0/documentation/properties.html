@@ -1,0 +1,361 @@
+<p><a href="https://github.com/benbahrenburg/Securely">&lt;&lt; back to the Securely main page</a></p>
+<p>BenCoding.Securely.Properties</p>
+<p>The Securely Properties module is used to store values in the KeyChain using the same API as Titanium.App.Properties.</p>
+<h2>Getting Started</h2>
+
+<ul>
+<li>First you need to download and install the module as discussed <a href="https://github.com/benbahrenburg/Securely">here.</a></li>
+<li>You can now use the module via the commonJS require method, example shown below.</li>
+</ul>
+<pre><code>
+var securely = require('bencoding.securely');
+</code></pre>
+
+<h2>Requiring Securely into your project</h2>
+
+<p>Requiring the module into your project</p>
+<pre><code>
+//Require the securely module into your project
+var securely = require('bencoding.securely');
+
+</code></pre>
+
+<h2>Creating the Properties Object</h2>
+
+<p><b>Parameters</b></p>
+<p><b>identifier</b> : String</p>
+<p>This parameter is optional. If no value is provided, the bundle name on iOS or the PackageName on Android is used. identifier allows you to segment each property with an identifier, if needed.</p>
+<p><b>accessGroup</b> : String</p>
+<p>This parameter is an optional value used on the iOS platform. Access groups can be used to share keychain items among two or more applications. If no access group is provided, the keychain values will only be accessible within the app saving the values.</p>
+<p><b>secret</b> : String</p>
+<p>This is a required parameter. secret is the password used to encrypt and decrypt all property values. The same secret used to encrypt must be used during the decryption process or a null value will be returned.</p>
+<p>Note that if you provide an <code>iv</code> paramater and are using Android API &gt;=23 then a secret is not required. See the next propery.</p>
+<p><b>iv</b> : String</p>
+<p>If this value, the Initialization Vector, is set and the device is using API &gt;=23 then the <code>secret</code> is ignored and the KeyStore will be used to generate and securely store the encryption key.</p>
+<p><b>encryptFieldNames</b> : Boolean</p>
+<p>This parameter is an optional value only used on the Android platform. When set to true, Securely will create an MD5 hash using the provided secret for all property names.</p>
+<pre><code>
+var properties = securely.createProperties({
+    secret:"sshh_dont_tell",
+    identifier:"myPropertyIdentifier",
+    accessGroup:"myAccessGroup",
+    encryptFieldNames:false
+});
+
+</code></pre>
+
+<h2>Methods</h2>
+
+<p><b>addEventListener</b>( String name, Callback<Object> callback )
+Adds the specified callback as an event listener for the named event.</p>
+<p><b>Parameters</b>
+name : String
+Name of the event.
+callback : Callback<Object>
+Callback function to invoke when the event is fired.</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+function onChange(e){
+    Ti.API.info("Property " + e.source + " changed");
+};
+//Use the properties variable shown in the require section
+properties.addEventListener('changed',onChange);
+</code></pre></p>
+<hr />
+<p><b>getBool</b>( String property, [Boolean default] ) : Boolean
+Returns the value of a KeyChain Property as a boolean data type.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : Boolean (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+Boolean</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('Bool: ' + properties.getBool('whatever',true));
+</code></pre></p>
+<hr />
+<p><b>getDouble</b>( String property, [Number default] ) : Number
+Returns the value of a KeyChain Property as a double (double-precision, floating point) data type.
+This method must only be used to retrieve properties created with setDouble.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : Number (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+Number</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('Double: ' + (properties.getDouble('whatever',2.5));
+</code></pre></p>
+<hr />
+<p><b>getInt</b>( String property, [Number default] ) : Number
+Returns the value of a KeyChain Property as an integer data type.
+This method must only be used to retrieve properties created with setInt.
+Use getDouble and setDouble to store values outside the integer data type range of -2,147,483,648 to 2,147,483,647.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : Number (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+Number</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('int: ' +  properties.getInt('whatever',1));
+</code></pre></p>
+<hr />
+<p><b>getList</b>( String property, [Object[] default] ) : Object[]
+Returns the value of a KeyChain Property as an array data type.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : Object[] (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+Object[]</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('StringList: ' + properties.getList('whatever'));
+</code></pre></p>
+<hr />
+<p><b>getObject</b>( String property, [Object default] ) : Object
+Returns the value of a KeyChain Property as an object.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : Object (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+Object</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('Object: ' + properties.getObject('whatever'));
+</code></pre></p>
+<hr />
+<p><b>getString</b>( String property, [String default] ) : String
+Returns the value of a KeyChain Property as a string data type.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : String (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+String</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('String: ' + properties.getString('whatever','foo'));
+</code></pre></p>
+<hr />
+<p><b>hasProperty</b>( String property ) : Boolean
+Indicates whether a KeyChain Property exists.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.</p>
+<p><b>Returns</b>
+Boolean</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+var exists = properties.hasProperty('String');
+Titanium.API.info('String Property '+ ((exists)? " Exists" : " Doesn't Exist"));
+</code></pre></p>
+<hr />
+<p><b>listProperties</b>( ) : Object[]
+Returns an array of KeyChain Property names.</p>
+<p>If field name encryption is enabled ( android only ) null will always be returned.</p>
+<p><b>Returns</b>
+Object[]</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+//Will provide the name of all properties
+var foo = properties.listProperties();
+</code></pre></p>
+<hr />
+<p><b>removeEventListener</b>( String name, Callback<Object> callback )
+Removes the specified callback as an event listener for the named event.
+Multiple listeners can be registered for the same event, so the callback parameter is used to determine which listener to remove.
+When adding a listener, you must save a reference to the callback function in order to remove the listener later:
+var listener = function() { Ti.API.info("Event listener called."); }
+window.addEventListener('click', listener);
+To remove the listener, pass in a reference to the callback function:
+window.removeEventListener('click', listener);</p>
+<p><b>Parameters</b>
+name : String
+Name of the event.
+callback : Callback<Object>
+Callback function to remove. Must be the same function passed to addEventListener.</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+//Remove the method we added in the addEventListener section
+properties.removeEventListener('changed',onChange);</p>
+<p></code></pre></p>
+<hr />
+<p><b>removeProperty</b>( String property )
+Removes a KeyChain Property if it exists, or does nothing otherwise.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+var exists = properties.hasProperty('String');
+Titanium.API.info('String Property '+ ((exists)? " Exists" : " Doesn't Exist"));
+properties.removeProperty('String');
+exists = properties.hasProperty('String');
+Titanium.API.info('String Property '+ ((exists)? " Exists" : " Doesn't Exist"));
+</code></pre></p>
+<hr />
+<p><b>removeAllProperties</b>
+Removes all KeyChain properties</p>
+<p><b>Parameters</b>
+N/A</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+var exists = properties.hasProperty('String');
+Titanium.API.info('String Property '+ ((exists)? " Exists" : " Doesn't Exist"));
+properties.removeAllProperties();
+exists = properties.hasProperty('String');
+Titanium.API.info('String Property '+ ((exists)? " Exists" : " Doesn't Exist"));
+</code></pre></p>
+<hr />
+<p><b>setBool</b>( String property, Boolean value )
+Sets the value of a KeyChain Property as a boolean data type. The KeyChain Property will be created if it does not exist.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+value : Boolean
+Property value.</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+properties.setString('String','I am a String Value ');
+</code></pre></p>
+<hr />
+<p><b>setDouble</b>( String property, Number value )
+Sets the value of a KeyChain Property as a double (double-precision, floating point) data type. The KeyChain Property will be created if it does not exist.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+value : Number
+Property value.</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+properties.setDouble('Double',10.6);
+</code></pre></p>
+<hr />
+<p><b>setInt</b>( String property, Number value )
+Sets the value of a KeyChain Property as an integer data type. The KeyChain Property will be created if it does not exist.
+Use getDouble and setDouble to store values outside the integer data type range of -2,147,483,648 to 2,147,483,647.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+value : Number
+KeyChain Property value, within the range -2,147,483,648 to 2,147,483,647.</p>
+<p><b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+properties.setInt('Int',10);
+</code></pre></p>
+<hr />
+<p><b>setList</b>( String property, Object[] value )
+Sets the value of a KeyChain Property as an array data type. The KeyChain Property will be created if it does not exist.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+value : Object[]
+Property value.
+<b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+var array = [
+  {name:'Name 1', address:'1 Main St'},
+    {name:'Name 2', address:'2 Main St'},
+    {name:'Name 3', address:'3 Main St'},
+    {name:'Name 4', address:'4 Main St'}
+];</p>
+<p>//Use the properties variable shown in the require section
+properties.setList('MyList',array);
+</code></pre></p>
+<hr />
+<p><b>setObject</b>( String property, Object value )
+Sets the value of a KeyChain Property as an object data type. The KeyChain Property will be created if it does not exist.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+value : Object
+Property value.
+<b>Returns</b>
+void</p>
+<p><b>Example</b>
+<pre><code>
+var array = [
+    {name:'Name 1', address:'1 Main St'},
+    {name:'Name 2', address:'2 Main St'},
+    {name:'Name 3', address:'3 Main St'},
+    {name:'Name 4', address:'4 Main St'}
+];</p>
+<p>//Use the properties variable shown in the require section
+properties.setObject('MyObject',array);
+</code></pre></p>
+<hr />
+<p><b>hasFieldsEncrypted</b>( ) : Boolean
+Returns true if field name encryption is enabled or false if not.</p>
+<p>Please note to enable this feature you must create a new property object using the encryptFieldNames set to true.</p>
+<p><b>Parameters</b>
+property : String
+Name of property.
+default : Number (optional)
+Default value to return if KeyChain Property does not exist.</p>
+<p><b>Returns</b>
+Number</p>
+<p><b>Example</b>
+<pre><code>
+//Use the properties variable shown in the require section
+Titanium.API.debug('int: ' +  properties.getInt('whatever',1));
+</code></pre></p>
+<hr />
+<h2>Events</h2>
+
+<p><b>changed</b>
+The event is fired when the application changes a KeyChain Property directly using one of the Properties methods.</p>
+<h2>Dependent Projects</h2>
+
+<p>Securely for iOS uses several wonderful open source projects.  I highly encourage you to check them out using the information below.</p>
+<p>JSONKit</p>
+<p>Project: <a href="http://github.com/johnezang/JSONKit">http://github.com/johnezang/JSONKit</a></p>
+<p>PDKeychainBindingsController</p>
+<p>Project: <a href="https://github.com/carlbrown/PDKeychainBindingsController">https://github.com/carlbrown/PDKeychainBindingsController</a></p>
+<h2>FAQ</h2>
+
+<h3>What happens when I uninstall my App?</h3>
+
+<p>Please note the keyChain entries will still present on the device after you uninstall your app.  You will need to design your app workflow to handle this if there is a need to remove or refresh these entries.</p>
+<p>This is a feature of the Apple KeyChain API itself and beyond the control of the module.</p>

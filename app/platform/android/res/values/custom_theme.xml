@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="boilerplate" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">#2C8ABE</item>
+        <item name="colorPrimary">#51BEED</item>
+        <item name="colorAccent">#F26522</item>
+        <item name="colorControlNormal">#f7f7f7</item>
+        <item name="colorControlActivated">#F26522</item>
+        <item name="colorSwitchThumbNormal">#B5B5B5</item>
+        <item name="android:colorButtonNormal">#F26522</item>
+        <item name="android:colorEdgeEffect">#FF9966</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="android:statusBarColor">#2C8ABE</item>
+        <item name="android:colorForeground">#ffffff</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewCustom</item>
+        <item name="android:timePickerDialogTheme">@style/AlertDialogCustom</item>
+        <item name="android:datePickerDialogTheme">@style/AlertDialogCustom</item>
+        <item name="alertDialogTheme">@style/AlertDialogCustom</item>
+    </style>
+    <style name="AutoCompleteTextViewCustom" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:textColorHint">#ffffff</item>
+    </style>
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#F26522</item>
+        <item name="colorControlActivated">#F26522</item>
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
+</resources>

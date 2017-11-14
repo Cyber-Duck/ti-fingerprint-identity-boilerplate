@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define a theme using the AppCompat.Light theme as a base theme -->
+    <style name="Theme.Simple" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
+    <style name="Simple" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MainActionBarTitleText</item>
+        <item name="android:background">#11538b</item>
+    </style>
+    <style name="MainActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+</resources>

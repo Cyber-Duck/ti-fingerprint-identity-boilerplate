@@ -1,0 +1,14 @@
+<Alloy>
+	<!-- Followng Material Guidelines - https://material.io/guidelines/patterns/fingerprint.html#fingerprint-authentication -->
+	<AlertDialog id="alertDialog" onClick="fingerprintButtonPressed" title="Sign in" message="Confirm fingerprint to continue" cancel="0" platform="android" canceledOnTouchOutside="false">
+		<View platform="android" layout="horizontal">
+				<ImageView id="fingerprintIcon" left="24" height="40" width="40" top="20" bottom="24" />
+				<Label id="fingerprintLabel" color="#cccccc" text="Touch sensor" left="16" height="40" top="20" bottom="24" />
+		</View>
+	
+		<ButtonNames>
+			<ButtonName>CANCEL</ButtonName>
+			<ButtonName>USE PASSWORD</ButtonName>
+		</ButtonNames>
+	</AlertDialog>
+</Alloy>
