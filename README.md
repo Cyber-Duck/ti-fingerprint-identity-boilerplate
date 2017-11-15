@@ -1,3 +1,7 @@
+[!["Titanium"](http://www-static.appcelerator.com/badges/titanium-git-badge-sq@2x.png)](http://www.appcelerator.com/titanium/)
+[!["Alloy"](http://www-static.appcelerator.com/badges/alloy-git-badge-sq@2x.png)](http://www.appcelerator.com/alloy/)
+[!["License"](http://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat)](http://choosealicense.com/licenses/apache-2.0/)
+
 # Axway Appcelerator Titanium Alloy Application Boilerplate for Apple Touch ID and Google Fingerprint implementation
 
 This is a boilerplate for Apple Touch ID and Google Fingerprint implementation in your Ti Alloy application.
