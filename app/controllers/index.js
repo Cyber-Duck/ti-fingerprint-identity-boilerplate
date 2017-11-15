@@ -19,8 +19,12 @@ function refreshUI() {
         return;
     }
 
+    var reason = "Lorem ipsum sin dolor sit amet";
+    if (OS_ANDROID) {
+        $.fingerprintDialog.setReason(reason);
+    }
     Alloy.Globals.fingerprintIdentity.authenticate({
-        reason: "A reason to ask for Touch ID.",
+        reason: reason,
         fallbackTitle: "", // disable Enter Password fallback when Touch ID fails
         callback: function(e) {
             if (e.success) {
@@ -31,12 +35,11 @@ function refreshUI() {
                 }
             } else {
                 if (OS_ANDROID) {
-                    $.fingerprintDialog.failure();
+                    $.fingerprintDialog.failure(e.error);
                 } else {
                     alert("Error: " + e.error);
                 }
             }
-            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
             refreshUI();
         }
     });
@@ -44,13 +47,14 @@ function refreshUI() {
     if (OS_ANDROID) {
         $.fingerprintDialog.show(function() {
             Alloy.Globals.fingerprintIdentity.cancelAuthentication();
-        }, function() {
-            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
         });
     }
  }
 
 function setupLogin() {
+    if (OS_ANDROID) {
+        $.password.setValue("");
+    }
     return $.passwordPromt.show();
 }
 
@@ -58,15 +62,15 @@ function savePassword(e) {
     var plainPassword = OS_IOS ? e.text : $.password.getValue();
 
     Alloy.Globals.fingerprintIdentity.authenticate({
-        reason: "Confirm your fingerprint now.",
+        reason: "Confirm fingerprint to continue",
         fallbackTitle: "", // disable Enter Password fallback when Touch ID fails
         callback: function(e) {
             if (e.success) {
                 Alloy.Globals.fingerprintIdentity.enableLogin({
                     username: "foobar",
                     secret: plainPassword,
-                    callback: function(e) {
-                        if (e.success) {
+                    callback: function(result) {
+                        if (result.success) {
                             if (OS_ANDROID) {
                                 $.fingerprintDialog.success();
                             } else {
@@ -74,23 +78,23 @@ function savePassword(e) {
                             }
                         } else {
                             if (OS_ANDROID) {
-                                $.fingerprintDialog.failure();
+                                $.fingerprintDialog.failure(result.error);
                             } else {
-                                alert("Error: " + e.error);
+                                alert("Error: " + result.error);
                             }
                         }
                         refreshUI();
                     }
                 });
             } else {
-                Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+                if (OS_ANDROID) {
+                    $.fingerprintDialog.failure(e.error);
+                }
             }
         }
     });
     if (OS_ANDROID) {
         $.fingerprintDialog.show(function() {
-            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
-        }, function() {
             Alloy.Globals.fingerprintIdentity.cancelAuthentication();
         });
     }
@@ -105,8 +109,6 @@ function loginWithFingerprint() {
         onTrigger: function(e) {
             if (OS_ANDROID) {
                 $.fingerprintDialog.show(function() {
-                    Alloy.Globals.fingerprintIdentity.cancelAuthentication();
-                }, function() {
                     Alloy.Globals.fingerprintIdentity.cancelAuthentication();
                 });
             }

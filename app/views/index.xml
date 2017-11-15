@@ -12,8 +12,11 @@
             </View>
             <AlertDialog id="passwordPromt" title="Enter secret password" onClick="savePassword">
                 <View platform="android">
-                    <TextField id="password" />
+                    <TextField id="password" passwordMask="true" color="black" width="Ti.UI.FILL" />
                 </View>
+                <ButtonNames platform="android">
+                    <ButtonName>OK</ButtonName>
+                </ButtonNames>
             </AlertDialog>
             <Widget platform="android" id="fingerprintDialog" src="ti.androidfingerprintalertdialog" />
         </Window>

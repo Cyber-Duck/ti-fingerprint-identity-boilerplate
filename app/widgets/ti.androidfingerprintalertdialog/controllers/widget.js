@@ -1,19 +1,27 @@
-var usePasswordCallback, cancelCallback;
+var cancelCallback, usePasswordCallback;
 
 $.fingerprintIcon.image = WPATH("android_fingerprint.png");
 
-function show(UsePasswordCB,CancelCB){
+function show(CancelCB, UsePasswordCB) {
     $.fingerprintIcon.image = WPATH("android_fingerprint.png");
-	$.fingerprintLabel.color = "#cccccc";
+	$.fingerprintLabel.color = "#9c9c9c";
 	$.fingerprintLabel.text = "Touch sensor";
 	$.alertDialog.show();
-	usePasswordCallback = UsePasswordCB || {};
 	cancelCallback = CancelCB || {};
-};
+	usePasswordCallback = UsePasswordCB || {};
+}
 
-function hide(){
+function hide() {
 	$.alertDialog.hide();
-};
+}
+
+function setTitle(title) {
+	$.alertDialog.setTitle(title);
+}
+
+function setReason(reason) {
+	$.alertDialog.setMessage(reason);
+}
 
 function success(duration) {
 	duration = duration || 1000;
@@ -23,23 +31,26 @@ function success(duration) {
 	setTimeout(function() {
 		$.alertDialog.hide();
 	}, duration);
-};
+}
 
-function failure(){
+function failure(message) {
 	$.fingerprintIcon.image = WPATH("android_fingerprint_failure.png");
 	$.fingerprintLabel.color = "#f4511f";
-	$.fingerprintLabel.text = "Fingerprint not recognized.\nTry again.";
-};
+	$.fingerprintLabel.text = message || "Fingerprint not recognized.\nTry again.";
+}
 
-function fingerprintButtonPressed(e){
-	if (e.index === 1) {			//"Use Password"
+function fingerprintButtonPressed(e) {
+	if (e.index === 1) {
 		usePasswordCallback();
-	} else if (e.index === 0) {		//"Cancel"
+	} else if (e.index === 0) {
 		cancelCallback();
 	}
-};
+}
+
 exports.show = show;
 exports.hide = hide;
+exports.setTitle = setTitle;
+exports.setReason = setReason;
 exports.success = success;
 exports.failure = failure;
 exports.fingerprintButtonPressed = fingerprintButtonPressed;

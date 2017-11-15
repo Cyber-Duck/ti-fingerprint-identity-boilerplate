@@ -100,11 +100,13 @@ var main = function() {
         }
     };
     FingerprintIdentity.resetLogin = function() {
-        _keychainItem.fetchExistence(function(e) {
-            if (e.exists) {
-                _keychainItem.reset();
-            }
-        });
+        if (OS_IOS) {
+            _keychainItem.fetchExistence(function(e) {
+                if (e.exists) {
+                    _keychainItem.reset();
+                }
+            });
+        }
         Ti.App.Properties.setString("touchfinger.username", null);
         Ti.App.Properties.setString("touchfinger.secret", null);
 

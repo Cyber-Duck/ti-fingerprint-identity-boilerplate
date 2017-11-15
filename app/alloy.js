@@ -12,4 +12,4 @@
 
 // Init the library
 var FingerprintIdentity = require("fingerprint-identity");
-Alloy.Globals.fingerprintIdentity = new FingerprintIdentity();
+Alloy.Globals.fingerprintIdentity = new FingerprintIdentity
