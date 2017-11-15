@@ -4,6 +4,10 @@ This is a boilerplate for Apple Touch ID and Google Fingerprint implementation i
 
 The idea is to have this as a sample and a boilerplate for building applications using those technologies.
 
+iOS Demo                                                 |  Android Demo
+:-------------------------------------------------------:|:----------------------------------------------------------:
+![](https://cdn-std.dprcdn.net/files/acc_244709/uDTdRD)  |  ![](https://cdn-std.dprcdn.net/files/acc_244709/PquSC2)
+
 ## Dependancies (all included)
 
 * [Ti.Identity](https://github.com/appcelerator-modules/titanium-identity)
@@ -31,6 +35,8 @@ This is so you can build and run this on iOS devices too.
 `YOUR_TEAM_ID` can be found [here](https://developer.apple.com/account/#/membership) once logged in.
 
 From there, you should be ready to build and test the boilerplate.
+
+**Note:** For some reason, `Ti.Identity.isSupported()` always returns `false` on an Android Virtual Device but it works pretty well on a real device.
 
 ## Installation
 

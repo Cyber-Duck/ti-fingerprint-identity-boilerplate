@@ -5,7 +5,7 @@
                 <Button onClick="basicPrompt">Ask for Fingerprint</Button>
                 <View id="setupSection" layout="vertical" height="Ti.UI.SIZE" top="30">
                     <Label id="setupLabel" />
-                    <Button onClick="setupLogin">Setup</Button>
+                    <Button onClick="setupLogin">Setup Login</Button>
                 </View>
                 <Button id="loginFingerBtn" onClick="loginWithFingerprint" top="30" />
                 <Button onClick="reset" top="30">Reset login</Button>
@@ -14,7 +14,7 @@
                 <View platform="android">
                     <TextField id="password" passwordMask="true" color="black" width="Ti.UI.FILL" />
                 </View>
-                <ButtonNames platform="android">
+                <ButtonNames>
                     <ButtonName>OK</ButtonName>
                 </ButtonNames>
             </AlertDialog>

@@ -53,7 +53,6 @@ var main = function() {
     };
     FingerprintIdentity.getLoginCredentials = function(args) {
         onTrigger = args.onTrigger || function() {};
-        onFailedTouch = args.onFailedTouch || function() {};
         onCompletion = args.onCompletion;
 
         var credentials = {
@@ -72,8 +71,6 @@ var main = function() {
 
                         return onCompletion(credentials);
                     } else {
-                        onFailedTouch();
-
                         return onCompletion(e);
                     }
                 }
@@ -90,8 +87,6 @@ var main = function() {
                         }));
                     }, 200);
                 } else {
-                    onFailedTouch();
-
                     return onCompletion(e);
                 }
             });

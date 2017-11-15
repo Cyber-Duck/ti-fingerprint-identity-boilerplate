@@ -1,6 +1,13 @@
 "Window" : {
 	backgroundColor: "#fff",
 }
+"Window[platform=ios]": {
+    barColor: "#51BEED",
+    titleAttributes: {
+        color: "white",
+    },
+    statusBarStyle: Ti.UI.iOS.StatusBar.LIGHT_CONTENT,
+}
 "Label" : {
     color: "#000",
 }

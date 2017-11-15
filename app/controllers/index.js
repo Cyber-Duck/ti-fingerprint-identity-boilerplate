@@ -1,10 +1,10 @@
- function basicPrompt() {
+function basicPrompt() {
     if (!Alloy.Globals.fingerprintIdentity.isSupported()) {
-        alert("Touch ID / Fingerprint is not supported on this device!");
+        alert("Touch ID is currently locked or not supported on this device.");
         return;
     }
 
-    var reason = "Lorem ipsum sin dolor sit amet";
+    var reason = "This is a basic prompt";
     if (OS_ANDROID) {
         $.fingerprintDialog.setReason(reason);
     }
@@ -34,7 +34,7 @@
             Alloy.Globals.fingerprintIdentity.cancelAuthentication();
         });
     }
- }
+}
 
 function setupLogin() {
     if (OS_ANDROID) {
@@ -74,6 +74,8 @@ function savePassword(e) {
             } else {
                 if (OS_ANDROID) {
                     $.fingerprintDialog.failure(e.error);
+                } else {
+                    alert("Error: " + e.error);
                 }
             }
         }
@@ -98,16 +100,20 @@ function loginWithFingerprint() {
                 });
             }
         },
-        onFailedTouch: function() {
-            if (OS_ANDROID) {
-                $.fingerprintDialog.failure();
-            }
-        },
         onCompletion: function(e) {
             if (OS_ANDROID) {
-                $.fingerprintDialog.success();
+                if (e.success) {
+                    $.fingerprintDialog.success();
+                    _.delay(function() {
+                        alert(JSON.stringify(e));
+                    }, 2000);
+                } else {
+                    $.fingerprintDialog.failure(e.error);
+                }
             }
-           return alert(JSON.stringify(e));
+            if (OS_IOS) {
+                return alert(JSON.stringify(e));
+            }
         }
     });
 }

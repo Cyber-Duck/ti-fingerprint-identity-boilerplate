@@ -3,9 +3,7 @@
   "env:development": {},
   "env:test": {},
   "env:production": {},
-  "os:android": {
-    "salt": "a_pinch_of_salt"
-  },
+  "os:android": {},
   "os:blackberry": {},
   "os:ios": {},
   "os:mobileweb": {},
