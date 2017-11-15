@@ -1,0 +1,26 @@
+"Window[platform=ios]": {
+    title: "Touch ID Boilerplate",
+}
+"Window[platform=android]": {
+    title: "Fingerprint Boilerplate",
+}
+"#passwordPromt[platform=ios]": {
+    style: Ti.UI.iOS.AlertDialogStyle.SECURE_TEXT_INPUT,
+}
+"#setupLabel": {
+    textAlign: "center",
+    color: "#c0c0c0",
+    fontSize: 11,
+}
+"#setupLabel[platform=ios]": {
+    text: "Setup login with Touch ID\nusing username [foobar].",
+}
+"#setupLabel[platform=android]": {
+    text: "Setup login with Fingerprint\nusing username [foobar].",
+}
+"#loginFingerBtn[platform=ios]": {
+    title: "Login with Touch ID",
+}
+"#loginFingerBtn[platform=android]": {
+    title: "Login with Fingerprint",
+}

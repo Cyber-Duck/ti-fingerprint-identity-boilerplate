@@ -11,9 +11,5 @@
 // Alloy.Globals.someGlobalFunction = function(){};
 
 // Init the library
-var TouchFinger = require("touchfinger");
-Alloy.Globals.touchfinger = new TouchFinger();
-// Extra functionality to the library when used for login
-Alloy.Globals.canLoginWithFingerprint = function() {
-    return Alloy.Globals.touchfinger.isSupported() && Alloy.Globals.touchfinger.isLoginEnabled();
-};
+var FingerprintIdentity = require("fingerprint-identity");
+Alloy.Globals.fingerprintIdentity = new FingerprintIdentity();

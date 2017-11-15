@@ -7,13 +7,14 @@ The idea is to have this as a sample and a boilerplate for building applications
 ## Dependancies (all included)
 
 * [Ti.Identity](https://github.com/appcelerator-modules/titanium-identity)
-* [ti.androidfingerprintalertdialog](https://github.com/adamtarmstrong/ti.androidfingerprintalertdialog) for Android Dialog
+* [ti.androidfingerprintalertdialog](https://github.com/adamtarmstrong/ti.androidfingerprintalertdialog) for Android Fingerprint Dialogs
+* [Bencoding.Securely](https://github.com/benbahrenburg/Securely) to store login credentials securely on Android (replace Apple KeyChain)
 
 ## Requrements
 
 * Ti SDK 6.3.0.GA+
 
-## Usage
+## Usage
 
 Once cloned, you can run `appc new --import --no-service` to initialise your `tiapp.xml` file with a valid app GUID.
 
@@ -45,12 +46,13 @@ For both:
 ```xml
 <modules>
     <module platform="android" version="1.0.0">ti.identity</module>
+    <module platform="android" version="3.1.0">bencoding.securely</module>
     <module platform="iphone" version="1.0.1">ti.identity</module>
 </modules>
 ```
-### Setup `touchfinger.js`
+### Setup `fingerprint-identity.js`
 
-The TouchFinger CommonJS library `lib/touchfinger.js` is a wrapper to give you easy to use functions to call.
+Our FingerprintIdentity CommonJS library `lib/fingerprint-identity.js` is a wrapper to give you easy-to-use functions to call.
 
 It also supports authentication capabilities if you're planning to use Touch ID or Fingerprint with a login functionality.
 
@@ -58,15 +60,11 @@ Initialise it in your `app/alloy.js`:
 
 ```js
 // Init the library
-var TouchFinger = require("touchfinger");
-Alloy.Globals.TouchFinger = new TouchFinger();
-// Extra functionality to the library when used for login (optional)
-Alloy.Globals.canLoginWithFingerprint = function() {
-    return Alloy.Globals.touchfinger.isSupported() && Alloy.Globals.touchfinger.isLoginEnabled();
-};
+var FingerprintIdentity = require("fingerprint-identity");
+Alloy.Globals.fingerprintIdentity = new FingerprintIdentity();
 ```
 
-
+`app/controllers/index.js` is a good example of what you can easily do wit `fingerprint-identity`.
 
 ## Resources
 
@@ -75,3 +73,4 @@ Alloy.Globals.canLoginWithFingerprint = function() {
 * [Ti.Identity.KeychainItem](http://docs.appcelerator.com/platform/latest/#!/api/Modules.Identity.KeychainItem)
 * [Android Implentation Guide](https://medium.com/adamtarmstrong/https-medium-com-adamtarmstrong-android-fingerprint-authentication-using-axway-titanium-2c73a6c35df1)
 * [Alloy Widget for Android Fingerprint UI](https://github.com/adamtarmstrong/ti.androidfingerprintalertdialog)
+* [Bencoding.Securely](https://github.com/benbahrenburg/Securely)

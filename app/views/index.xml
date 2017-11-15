@@ -1,6 +1,21 @@
 <Alloy>
-    <Window>
-        <Button onClick="authenticate">Ask for Finger print</Button>
-        <Widget platform="android" id="fingerprintDialog" src="ti.androidfingerprintalertdialog" />
-    </Window>
+    <NavigationWindow module="xp.ui">
+        <Window>
+            <View layout="vertical" height="Ti.UI.SIZE">
+                <Button onClick="basicPrompt">Ask for Fingerprint</Button>
+                <View id="setupSection" layout="vertical" height="Ti.UI.SIZE" top="30">
+                    <Label id="setupLabel" />
+                    <Button onClick="setupLogin">Setup</Button>
+                </View>
+                <Button id="loginFingerBtn" onClick="loginWithFingerprint" top="30" />
+                <Button onClick="reset" top="30">Reset login</Button>
+            </View>
+            <AlertDialog id="passwordPromt" title="Enter secret password" onClick="savePassword">
+                <View platform="android">
+                    <TextField id="password" />
+                </View>
+            </AlertDialog>
+            <Widget platform="android" id="fingerprintDialog" src="ti.androidfingerprintalertdialog" />
+        </Window>
+    </NavigationWindow>
 </Alloy>

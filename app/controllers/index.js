@@ -1,43 +1,134 @@
-if (OS_IOS) {
-    $.getView().setTitle("Touch ID Boilerplate");
-} else {
-    $.getView().setTitle("Fingerprint Boilerplate");
+function refreshUI() {
+    _.delay(function(){
+        if (Alloy.Globals.fingerprintIdentity.isLoginEnabled()) {
+            $.setupSection.hide();
+        } else {
+            $.setupSection.show();
+        }
+        if (Alloy.Globals.fingerprintIdentity.canLoginWithFingerprint()) {
+            $.loginFingerBtn.show();
+        } else {
+            $.loginFingerBtn.hide();
+        }
+    }, 50);
 }
 
- function authenticate() {
-     if (!Alloy.Globals.touchfinger.isSupported()) {
-         alert("Touch ID / Fingerprint is not supported on this device!");
-         return;
-     }
+ function basicPrompt() {
+    if (!Alloy.Globals.fingerprintIdentity.isSupported()) {
+        alert("Touch ID / Fingerprint is not supported on this device!");
+        return;
+    }
 
-     Alloy.Globals.touchfinger.authenticate({
-         reason: "A reason to ask for Touch ID.",
-         callback: function(e) {
-             if (!e.success) {
+    Alloy.Globals.fingerprintIdentity.authenticate({
+        reason: "A reason to ask for Touch ID.",
+        fallbackTitle: "", // disable Enter Password fallback when Touch ID fails
+        callback: function(e) {
+            if (e.success) {
+                if (OS_ANDROID) {
+                    $.fingerprintDialog.success();
+                } else {
+                    alert("Success!");
+                }
+            } else {
                 if (OS_ANDROID) {
                     $.fingerprintDialog.failure();
                 } else {
-                    alert("Error.");
+                    alert("Error: " + e.error);
                 }
-                console.error('ERROR! Message: ' + e.error);
-             } else {
-                 if (OS_ANDROID) {
-                     $.fingerprintDialog.success();
-                 } else {
-                    alert("Success!");
-                 }
-                 console.log('SUCCESS!');
-             }
-         }
-     });
+            }
+            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+            refreshUI();
+        }
+    });
 
-     if (OS_ANDROID) {
-         $.fingerprintDialog.show(function() {
-             Alloy.Globals.touchfinger.cancelAuthentication();
-         }, function() {
-             Alloy.Globals.touchfinger.cancelAuthentication();
-         });
-     }
- };
+    if (OS_ANDROID) {
+        $.fingerprintDialog.show(function() {
+            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+        }, function() {
+            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+        });
+    }
+ }
 
- $.index.open();
+function setupLogin() {
+    return $.passwordPromt.show();
+}
+
+function savePassword(e) {
+    var plainPassword = OS_IOS ? e.text : $.password.getValue();
+
+    Alloy.Globals.fingerprintIdentity.authenticate({
+        reason: "Confirm your fingerprint now.",
+        fallbackTitle: "", // disable Enter Password fallback when Touch ID fails
+        callback: function(e) {
+            if (e.success) {
+                Alloy.Globals.fingerprintIdentity.enableLogin({
+                    username: "foobar",
+                    secret: plainPassword,
+                    callback: function(e) {
+                        if (e.success) {
+                            if (OS_ANDROID) {
+                                $.fingerprintDialog.success();
+                            } else {
+                                alert("Success!");
+                            }
+                        } else {
+                            if (OS_ANDROID) {
+                                $.fingerprintDialog.failure();
+                            } else {
+                                alert("Error: " + e.error);
+                            }
+                        }
+                        refreshUI();
+                    }
+                });
+            } else {
+                Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+            }
+        }
+    });
+    if (OS_ANDROID) {
+        $.fingerprintDialog.show(function() {
+            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+        }, function() {
+            Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+        });
+    }
+}
+
+function loginWithFingerprint() {
+    if (!Alloy.Globals.fingerprintIdentity.canLoginWithFingerprint()) {
+        return alert("Login using Touch ID is not accessible at the moment.");
+    }
+
+    Alloy.Globals.fingerprintIdentity.getLoginCredentials({
+        onTrigger: function(e) {
+            if (OS_ANDROID) {
+                $.fingerprintDialog.show(function() {
+                    Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+                }, function() {
+                    Alloy.Globals.fingerprintIdentity.cancelAuthentication();
+                });
+            }
+        },
+        onFailedTouch: function() {
+            if (OS_ANDROID) {
+                $.fingerprintDialog.failure();
+            }
+        },
+        onCompletion: function(e) {
+            if (OS_ANDROID) {
+                $.fingerprintDialog.success();
+            }
+           return alert(JSON.stringify(e));
+        }
+    });
+}
+
+function reset() {
+    Alloy.Globals.fingerprintIdentity.resetLogin();
+    refreshUI();
+}
+
+refreshUI();
+$.index.open();
