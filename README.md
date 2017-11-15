@@ -4,9 +4,9 @@ This is a boilerplate for Apple Touch ID and Google Fingerprint implementation i
 
 The idea is to have this as a sample and a boilerplate for building applications using those technologies.
 
-iOS Demo                                           |  Android Demo
-:-------------------------------------------------:|:-------------------------:
-<img src="docs/ios.gif" style="height: 300px;" />  |  <img src="docs/android.gif" style="height: 300px;" />
+iOS Demo           |  Android Demo
+:-----------------:|:-------------------------:
+![](docs/ios.gif)  |  ![](docs/android.gif)
 
 ## Dependancies (all included)
 
