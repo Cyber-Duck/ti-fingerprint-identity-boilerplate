@@ -86,6 +86,12 @@ Alloy.Globals.fingerprintIdentity = new FingerprintIdentity();
 
 `app/controllers/index.js` is a good example of what you can easily do with `fingerprint-identity`.
 
+Our login setup example is what you could use with an API for example. You could ask for an access_token only valid for a fingerprint login.
+
+Here we simply accept a password input but it would be exactly the same thing with an API call.
+
+No matter what, we securely store it (the password or token) using either the iOS KeyChain or AES Encryption using `Bencoding.Securely` on Android.
+
 ## Resources
 
 * [Ti.Identity](http://docs.appcelerator.com/platform/latest/#!/api/Modules.Identity)
