@@ -1,18 +1,3 @@
-function refreshUI() {
-    _.delay(function(){
-        if (Alloy.Globals.fingerprintIdentity.isLoginEnabled()) {
-            $.setupSection.hide();
-        } else {
-            $.setupSection.show();
-        }
-        if (Alloy.Globals.fingerprintIdentity.canLoginWithFingerprint()) {
-            $.loginFingerBtn.show();
-        } else {
-            $.loginFingerBtn.hide();
-        }
-    }, 50);
-}
-
  function basicPrompt() {
     if (!Alloy.Globals.fingerprintIdentity.isSupported()) {
         alert("Touch ID / Fingerprint is not supported on this device!");
@@ -130,6 +115,21 @@ function loginWithFingerprint() {
 function reset() {
     Alloy.Globals.fingerprintIdentity.resetLogin();
     refreshUI();
+}
+
+function refreshUI() {
+    _.delay(function(){
+        if (Alloy.Globals.fingerprintIdentity.isLoginEnabled()) {
+            $.setupSection.hide();
+        } else {
+            $.setupSection.show();
+        }
+        if (Alloy.Globals.fingerprintIdentity.canLoginWithFingerprint()) {
+            $.loginFingerBtn.show();
+        } else {
+            $.loginFingerBtn.hide();
+        }
+    }, 50);
 }
 
 refreshUI();

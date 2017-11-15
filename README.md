@@ -18,9 +18,25 @@ The idea is to have this as a sample and a boilerplate for building applications
 
 Once cloned, you can run `appc new --import --no-service` to initialise your `tiapp.xml` file with a valid app GUID.
 
-Don't forget to add the following to your `tiapp.xml`:
+Don't forget to add the following to your `tiapp.xml` too:
 
-For Android Fingerprint:
+For iOS Touch ID, at the root of the file:
+
+```xml
+<property name="touchid.team_id" type="string">YOU_TEAM_ID</property>
+```
+
+This is so you can build and run this on iOS devices too.
+
+`YOUR_TEAM_ID` can be found [here](https://developer.apple.com/account/#/membership) once logged in.
+
+From there, you should be ready to build and test the boilerplate.
+
+## Installation
+
+Here I'm going to list down all the things you will want to have a look at while porting this boilerplate into your application.
+
+### `tiapp.xml`
 
 ```xml
 <android ...>
@@ -33,16 +49,6 @@ For Android Fingerprint:
 </android>
 ```
 
-For iOS Touch ID, at the root of the file:
-
-```xml
-<property name="touchid.team_id" type="string">YOU_TEAM_ID</property>
-```
-
-`YOUR_TEAM_ID` can be found [here](https://developer.apple.com/account/#/membership) once logged in.
-
-For both:
-
 ```xml
 <modules>
     <module platform="android" version="1.0.0">ti.identity</module>
@@ -50,7 +56,15 @@ For both:
     <module platform="iphone" version="1.0.1">ti.identity</module>
 </modules>
 ```
-### Setup `fingerprint-identity.js`
+
+#### Install the required modules
+
+* `ti.identity` for both iOS and Android.
+* `bencoding.securely` for Android only.
+
+#### Install the required Alloy assets
+
+`ti.androidfingerprintalertdialog` Widget for Android only. Don't forget to add the dependancy to your `app/config.json` file.
 
 Our FingerprintIdentity CommonJS library `lib/fingerprint-identity.js` is a wrapper to give you easy-to-use functions to call.
 
@@ -64,7 +78,7 @@ var FingerprintIdentity = require("fingerprint-identity");
 Alloy.Globals.fingerprintIdentity = new FingerprintIdentity();
 ```
 
-`app/controllers/index.js` is a good example of what you can easily do wit `fingerprint-identity`.
+`app/controllers/index.js` is a good example of what you can easily do with `fingerprint-identity`.
 
 ## Resources
 
@@ -74,3 +88,21 @@ Alloy.Globals.fingerprintIdentity = new FingerprintIdentity();
 * [Android Implentation Guide](https://medium.com/adamtarmstrong/https-medium-com-adamtarmstrong-android-fingerprint-authentication-using-axway-titanium-2c73a6c35df1)
 * [Alloy Widget for Android Fingerprint UI](https://github.com/adamtarmstrong/ti.androidfingerprintalertdialog)
 * [Bencoding.Securely](https://github.com/benbahrenburg/Securely)
+
+## License
+
+```
+Copyright 2017 Cyber-Duck Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
