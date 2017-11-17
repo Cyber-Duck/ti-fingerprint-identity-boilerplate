@@ -18,9 +18,10 @@ iOS Demo           |  Android Demo
 * [ti.androidfingerprintalertdialog](https://github.com/adamtarmstrong/ti.androidfingerprintalertdialog) for Android Fingerprint Dialogs
 * [Bencoding.Securely](https://github.com/benbahrenburg/Securely) to store login credentials securely on Android (replace Apple KeyChain)
 
-## Requrements
+## Requirements
 
 * Ti SDK 6.3.0.GA+
+* All dependancies.
 
 ## Usage
 
