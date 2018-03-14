@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app
   xmlns:ti="http://ti.appcelerator.org">
-  <id>com.cyberduck.fingerprint-identity-boilerplate</id>
+  <id>com.cyberduck.fingerprintidentityboilerplate</id>
   <name>Fingerprint Identity Boilerplate</name>
   <version>1.0</version>
   <publisher>not specified</publisher>

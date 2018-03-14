@@ -2,11 +2,13 @@ var main = function() {
     var FingerprintIdentity = this;
 
     var Identity = require("ti.identity"),
-        _keychainItem = false;
+        _keychainItem = false,
+        uuid = Ti.App.Properties.getString("touchfinger.uuid", false),
+        securely,
+        stringCrypto;
     if (OS_ANDROID) {
-        var securely = require('bencoding.securely'),
-            stringCrypto = securely.createStringCrypto(),
-            uuid = Ti.Platform.createUUID();
+        securely = require("bencoding.securely");
+        stringCrypto = securely.createStringCrypto();
     }
 
     FingerprintIdentity.isInitialised = false;
@@ -21,7 +23,7 @@ var main = function() {
         return Identity.invalidate();
     };
     FingerprintIdentity.isSupported = function() {
-        if (Ti.Platform.model.indexOf('sdk') !== -1) {
+        if (Ti.Platform.model.indexOf("sdk") !== -1) {
             console.error("Fingerprint is not supported on Android Virtual Devices.");
             return false;
         }
@@ -52,13 +54,15 @@ var main = function() {
         return FingerprintIdentity.isSupported() && FingerprintIdentity.isLoginEnabled();
     };
     FingerprintIdentity.getLoginCredentials = function(args) {
-        onTrigger = args.onTrigger || function() {};
-        onCompletion = args.onCompletion;
+        var onCompletion = args.onCompletion,
+            onTrigger = args.onTrigger || function() {},
+            credentials = {
+                success: true,
+                username: Ti.App.Properties.getString("touchfinger.username", "")
+            };
 
-        var credentials = {
-            success: true,
-            username: Ti.App.Properties.getString("touchfinger.username", "")
-        };
+        onTrigger();
+
         if (OS_ANDROID) {
             FingerprintIdentity.authenticate({
                 callback: function(e) {
@@ -75,7 +79,6 @@ var main = function() {
                     }
                 }
             });
-            onTrigger();
         }
         if (OS_IOS) {
             _keychainItem.addEventListener("read", function _innerCallback(e) {
@@ -143,6 +146,11 @@ var main = function() {
     };
 
     return (function() {
+        if (!uuid) {
+            uuid = Ti.Platform.createUUID();
+            Ti.App.Properties.setString("touchfinger.uuid", uuid);
+        }
+
         if (OS_IOS) {
             if (!Ti.App.Properties.hasProperty("touchid.team_id")) {
                 throw new Error("<property name=\"touchid.team_id\" type=\"string\"></property> is missing from your tiapp.xml file.");
@@ -156,30 +164,30 @@ var main = function() {
                 accessibilityMode: Identity.ACCESSIBLE_WHEN_PASSCODE_SET_THIS_DEVICE_ONLY,
                 accessControlMode: Identity.ACCESS_CONTROL_TOUCH_ID_ANY,
                 options: {
-                    "u_OpPrompt": "Log in with Touch ID"
+                    "u_OpPrompt": "Sign In with Touch ID"
                 }
             });
 
             _keychainItem.addEventListener("save", function(e) {
                 if (!e.success) {
-                    console.error("::FingerprintIdentity:: Error saving into the keychain item [" + "touchfinger.secret" + "]: " + _getErrorMessage(e));
+                    console.error("::FingerprintIdentity:: Error saving into the keychain item [touchfinger.secret]: " + _getErrorMessage(e));
                     return;
                 }
-                console.info("::FingerprintIdentity:: Keychain item [" + "touchfinger.secret" + "] successfully saved.");
+                console.info("::FingerprintIdentity:: Keychain item [touchfinger.secret] successfully saved.");
             });
             _keychainItem.addEventListener("read", function(e) {
                 if (!e.success) {
-                    console.error("::FingerprintIdentity:: Error reading the keychain item [" + "touchfinger.secret" + "]: " + _getErrorMessage(e));
+                    console.error("::FingerprintIdentity:: Error reading the keychain item [touchfinger.secret]: " + _getErrorMessage(e));
                     return;
                 }
-                console.info("::FingerprintIdentity:: Keychain item [" + "touchfinger.secret" + "] successfully read.");
+                console.info("::FingerprintIdentity:: Keychain item [touchfinger.secret] successfully read.");
             });
             _keychainItem.addEventListener("reset", function(e) {
                 if (!e.success) {
-                    console.error("::FingerprintIdentity:: Error resetting the keychain item [" + "touchfinger.secret" + "]: " + _getErrorMessage(e));
+                    console.error("::FingerprintIdentity:: Error resetting the keychain item [touchfinger.secret]: " + _getErrorMessage(e));
                     return;
                 }
-                console.info("::FingerprintIdentity:: Keychain item [" + "touchfinger.secret" + "] successfully resetted.");
+                console.info("::FingerprintIdentity:: Keychain item [touchfinger.secret] successfully resetted.");
                 Ti.App.Properties.removeProperty("touchid.username");
             });
         }
